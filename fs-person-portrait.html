@@ -1,0 +1,139 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../fs-client/fs-client.html">
+<link rel="import" href="../fs-behavior/fs-behavior.html">
+
+<!--
+A FamilySearch person portrait.
+
+Example:
+
+    <fs-person-portrait pid="PPP-PPPP"></fs-person-portrait>
+
+@group FamilySearch Elements
+@element fs-person-portrait
+@demo demo/index.html
+-->
+<dom-module id="fs-person-portrait">
+  <link rel="import" type="css" href="fs-person-portrait.css">
+  <template>
+    <fs-client name="{{clientName}}" on-authenticated-changed="_authenticatedChanged"></fs-client>
+    <div id="portrait" class$="{{_iconClass(gender)}}"></div>
+  </template>
+</dom-module>
+
+<script>
+  
+  Polymer({
+    
+    is: 'fs-person-portrait',
+    
+    properties: {
+      
+      /**
+       * The person's FamilySearch ID
+       * 
+       * @type String
+       */
+      pid: {
+        type: String,
+        notify: true,
+        observer: '_idChanged'
+      },
+      
+      /**
+       * Gender: `male`, `female`, `unknown`. 
+       * This controls what gender icon is shown while a portrait is loading 
+       * and when a portrait does not exist for a person.
+       * 
+       * @type String
+       */
+      gender: {
+        type: String,
+        notify: true,
+        value: 'unknown',
+        observer: '_genderChanged'
+      },
+      
+      /**
+       * This is the URL to the person portrait resource of the API. 
+       * This _is not_ the URL of the portrait itself.
+       * A request to this URL will return the URL of the actual portrait image.
+       * If this URL is not set, a request to get the person will first be made
+       * in order to get the portrait resource URL.
+       * 
+       * @type String
+       */
+      portraitApiUrl: String,
+      
+      /**
+       * Portrait image URL.
+       * 
+       * @type String
+       */
+      portraitUrl: {
+        type: String,
+        notify: true,
+        value: ''
+      },
+      
+      _requested: {
+        type: Boolean,
+        value: false,
+        readOnly: true
+      },
+      
+      _responded: {
+        type: Boolean,
+        value: false,
+        readOnly: true
+      }
+      
+    },
+    
+    behaviors: [FSBehavior],
+    
+    attached: function(){
+      this._getPortrait();
+    },
+    
+    _authenticatedChanged: function(){
+      this._getPortrait();
+    },
+    
+    _idChanged: function(){
+      this._getPortrait();
+    },
+    
+    _getPortrait: function(){
+      if(!this._requested && this.pid && this.isAuthenticated()){
+        var self = this;
+        var portraitPromise;
+        if(this.portraitApiUrl){
+          portraitPromise = this.getClient().getPersonPortraitUrl(this.portraitApiUrl);
+        } else {
+          portraitPromise = this.getClient().getPerson(this.pid).then(function(response){
+            return response.getPerson().getPersonPortraitUrl();
+          });
+        }
+        portraitPromise.then(function(response){
+          self._set_responded(true);
+          self.portraitUrl = response.getPortraitUrl();
+          if(self.portraitUrl){
+            self.$.portrait.style['background-image'] = "url('" + self.portraitUrl + "')";
+          }
+        });
+        this._set_requested(true);
+      }
+    },
+    
+    _iconClass: function(gender){
+      return 'portrait fs-icon fs-icon-large-' + gender;
+    },
+    
+    _genderChanged: function(){
+      this.gender = this.gender.toLowerCase();
+    }
+    
+  });
+  
+</script>
