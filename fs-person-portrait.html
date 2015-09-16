@@ -30,14 +30,14 @@ Example:
     properties: {
       
       /**
-       * The person's FamilySearch ID
+       * The person's FamilySearch ID. Set this _or_ the portraitApiUrl; you don't need to set both.
        * 
        * @type String
        */
       pid: {
         type: String,
         notify: true,
-        observer: '_idChanged'
+        observer: '_getPortrait'
       },
       
       /**
@@ -61,9 +61,15 @@ Example:
        * If this URL is not set, a request to get the person will first be made
        * in order to get the portrait resource URL.
        * 
+       * Set this _or_ the ID; you don't need to set both.
+       * 
        * @type String
        */
-      portraitApiUrl: String,
+      portraitApiUrl: {
+        type: String,
+        notify: true,
+        observer: '_getPortrait'
+      },
       
       /**
        * Portrait image URL.
@@ -72,8 +78,7 @@ Example:
        */
       portraitUrl: {
         type: String,
-        notify: true,
-        value: ''
+        notify: true
       },
       
       _requested: {
@@ -105,9 +110,10 @@ Example:
     },
     
     _getPortrait: function(){
-      if(!this._requested && this.pid && this.isAuthenticated()){
+      if(this.isAuthenticated() && !this._requested && (this.pid || this.portraitApiUrl)){
         var self = this;
         var portraitPromise;
+        
         if(this.portraitApiUrl){
           portraitPromise = this.getClient().getPersonPortraitUrl(this.portraitApiUrl);
         } else {
@@ -115,6 +121,7 @@ Example:
             return response.getPerson().getPersonPortraitUrl();
           });
         }
+        
         portraitPromise.then(function(response){
           self._set_responded(true);
           self.portraitUrl = response.getPortraitUrl();
@@ -122,6 +129,7 @@ Example:
             self.$.portrait.style['background-image'] = "url('" + self.portraitUrl + "')";
           }
         });
+        
         this._set_requested(true);
       }
     },
