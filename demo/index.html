@@ -11,7 +11,7 @@
   </head>
   <body unresolved>
 
-    <fs-client client-id="a02j00000099Mc2AAE" redirect-uri="/" environment="sandbox" save-access-token></fs-client>
+    <fs-client id="client" client-id="a02j00000099Mc2AAE" redirect-uri="/" environment="sandbox" save-access-token></fs-client>
     <fs-signin></fs-signin>
     
     <h4>No Portrait</h4>
@@ -19,27 +19,32 @@
     <fs-person-portrait pid="KWWC-RCL" gender="FEMALE"></fs-person-portrait>
     <fs-person-portrait pid="KWWC-RCL" gender="male"></fs-person-portrait>
     
-    <h4>Portrait With API Url</h4>
-    <fs-person-portrait portrait-api-url="https://sandbox.familysearch.org/platform/tree/persons/KW7H-D56/portrait"></fs-person-portrait>
-    
     <h4>Portrait With ID</h4>
     <fs-person-portrait pid="KW7H-D56"></fs-person-portrait>
-    
-    <h4>Toggle - Portrait With API Url</h4>
-    <fs-person-portrait id="toggle-url"></fs-person-portrait>
-    <button id="toggle-url-btn">Set URL</button>
     
     <h4>Toggle - Portrait With ID</h4>
     <fs-person-portrait id="toggle-id"></fs-person-portrait>
     <button id="toggle-id-btn">Set ID</button>
     
+    <h4>Toggle - Portrait With Person</h4>
+    <fs-person-portrait id="toggle-person"></fs-person-portrait>
+    <button id="toggle-person-btn">Set Person</button>
+    
     <script>
-      document.getElementById('toggle-url-btn').addEventListener('click', function(){
-        document.getElementById('toggle-url').portraitApiUrl = 'https://sandbox.familysearch.org/platform/tree/persons/KW7H-D56/portrait';
-      });
-      
       document.getElementById('toggle-id-btn').addEventListener('click', function(){
         document.getElementById('toggle-id').pid = 'KW7H-D56';
+      });
+      
+      var client = document.getElementById('client').client;
+      document.getElementById('toggle-person-btn').addEventListener('click', function(){
+        document.getElementById('toggle-person').person = client.createPerson({
+          id: 'KW7H-D56',
+          links: {
+            portrait: {
+              href: 'https://sandbox.familysearch.org/platform/tree/persons/KW7H-D56/portrait'
+            }
+          }
+        });
       });
     </script>
 

@@ -30,11 +30,24 @@ Example:
     properties: {
       
       /**
-       * The person's FamilySearch ID. Set this _or_ the portraitApiUrl; you don't need to set both.
+       * The person's FamilySearch ID. Set this _or_ the `person`; you don't need to set both.
        * 
        * @type String
        */
       pid: {
+        type: String,
+        notify: true,
+        observer: '_getPortrait'
+      },
+      
+      /**
+       * FamilySearch SDK Person object.
+       * 
+       * Set this _or_ the `pid`; you don't need to set both.
+       * 
+       * @type String
+       */
+      person: {
         type: String,
         notify: true,
         observer: '_getPortrait'
@@ -52,23 +65,6 @@ Example:
         notify: true,
         value: 'unknown',
         observer: '_genderChanged'
-      },
-      
-      /**
-       * This is the URL to the person portrait resource of the API. 
-       * This _is not_ the URL of the portrait itself.
-       * A request to this URL will return the URL of the actual portrait image.
-       * If this URL is not set, a request to get the person will first be made
-       * in order to get the portrait resource URL.
-       * 
-       * Set this _or_ the ID; you don't need to set both.
-       * 
-       * @type String
-       */
-      portraitApiUrl: {
-        type: String,
-        notify: true,
-        observer: '_getPortrait'
       },
       
       /**
@@ -110,12 +106,12 @@ Example:
     },
     
     _getPortrait: function(){
-      if(this.isAuthenticated() && !this._requested && (this.pid || this.portraitApiUrl)){
+      if(this.isAuthenticated() && !this._requested && (this.pid || this.person)){
         var self = this;
         var portraitPromise;
         
-        if(this.portraitApiUrl){
-          portraitPromise = this.getClient().getPersonPortraitUrl(this.portraitApiUrl);
+        if(this.person){
+          portraitPromise = this.person.getPersonPortraitUrl();
         } else {
           portraitPromise = this.getClient().getPerson(this.pid).then(function(response){
             return response.getPerson().getPersonPortraitUrl();
