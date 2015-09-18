@@ -1,6 +1,6 @@
 {
   "name": "fs-person-portrait",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "authors": [
     "Justin York"
   ],
@@ -25,6 +25,8 @@
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "web-component-tester": "*",
-    "fs-signin": "york-solutions/fs-signin#^0.1.3"
+    "fs-signin": "york-solutions/fs-signin#^0.1.3",
+    "paper-card": "PolymerElements/paper-card#~1.0.4",
+    "paper-button": "PolymerElements/paper-button#~1.0.4"
   }
 }
