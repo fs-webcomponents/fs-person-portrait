@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../fs-client/fs-client.html">
-<link rel="import" href="../fs-behavior/fs-behavior.html">
+<link rel="import" href="../fs-person-behavior/fs-person-behavior.html">
 
 <!--
 A FamilySearch person portrait.
@@ -65,30 +65,6 @@ Custom property | Description | Default
     properties: {
       
       /**
-       * The person's FamilySearch ID. Set this _or_ the `person`; you don't need to set both.
-       * 
-       * @type String
-       */
-      personId: {
-        type: String,
-        notify: true,
-        observer: '_getPortrait'
-      },
-      
-      /**
-       * FamilySearch SDK Person object.
-       * 
-       * Set this _or_ the `pid`; you don't need to set both.
-       * 
-       * @type String
-       */
-      person: {
-        type: String,
-        notify: true,
-        observer: '_getPortrait'
-      },
-      
-      /**
        * Gender: `male`, `female`, `unknown`. 
        * This controls what gender icon is shown while a portrait is loading 
        * and when a portrait does not exist for a person.
@@ -112,13 +88,7 @@ Custom property | Description | Default
         notify: true
       },
       
-      _requested: {
-        type: Boolean,
-        value: false,
-        readOnly: true
-      },
-      
-      _responded: {
+      portraitRequested: {
         type: Boolean,
         value: false,
         readOnly: true
@@ -126,42 +96,24 @@ Custom property | Description | Default
       
     },
     
-    behaviors: [FSBehavior],
+    behaviors: [FSPersonBehavior],
     
-    attached: function(){
-      this._getPortrait();
-    },
-    
-    _authenticatedChanged: function(){
-      this._getPortrait();
-    },
-    
-    _idChanged: function(){
-      this._getPortrait();
-    },
+    observers: [
+      '_getPortrait(person)'
+    ],
     
     _getPortrait: function(){
-      if(this.isAuthenticated() && !this._requested && (this.personId || this.person)){
+      if(this.isAuthenticated() && this.person && !this.portraitRequested){
         var self = this;
-        var portraitPromise;
         
-        if(this.person){
-          portraitPromise = this.person.getPersonPortraitUrl();
-        } else {
-          portraitPromise = this.getClient().getPerson(this.personId).then(function(response){
-            return response.getPerson().getPersonPortraitUrl();
-          });
-        }
-        
-        portraitPromise.then(function(response){
-          self._set_responded(true);
+        this.person.getPersonPortraitUrl().then(function(response){
           self.portraitUrl = response.getPortraitUrl();
           if(self.portraitUrl){
             self.$.portrait.style['background-image'] = "url('" + self.portraitUrl + "')";
           }
         });
         
-        this._set_requested(true);
+        this._setPortraitRequested(true);
       }
     },
     
