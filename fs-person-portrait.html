@@ -1,6 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../fs-client/fs-client.html">
-<link rel="import" href="../fs-person-behavior/fs-person-behavior.html">
+<link rel="import" href="../fs-person-cache/fs-person-cache.html">
 
 <!--
 A FamilySearch person portrait.
@@ -51,76 +50,158 @@ Custom property | Description | Default
         background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20version%3D%221.2%22%20baseProfile%3D%22tiny%22%20id%3D%22Art%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20x%3D%220px%22%20y%3D%220px%22%20width%3D%2244px%22%20height%3D%2253px%22%20viewBox%3D%220%200%2044%2053%22%3E%3Cpath%20fill%3D%22%23BBBDBF%22%20d%3D%22M22%2C51.9c-11.542%2C0-21.293-1.736-21.293-3.79l0.039-0.523c0.072-1.001%2C0.147-2.036%2C0.406-3.022c0.119-0.441%2C0.244-1.008%2C0.381-1.623c0.348-1.563%2C0.78-3.509%2C1.347-4.495c1.057-1.805%2C2.302-2.559%2C4.229-3.32c0.518-0.197%2C0.983-0.484%2C1.433-0.763c0.362-0.224%2C0.736-0.454%2C1.128-0.632c1-0.062%2C1.549-0.25%2C2.462-0.672c0.408-0.186%2C0.815-0.201%2C1.246-0.218c0.203-0.008%2C0.411-0.016%2C0.629-0.04c0.846-0.071%2C0.998-0.394%2C1.274-0.98c0.065-0.138%2C0.137-0.292%2C0.229-0.464c0.83-1.543%2C0.91-4.425%2C0.423-5.783l-0.168-0.479c-0.346-1-0.82-2.37-1.622-2.982c-0.175-0.134-0.35-0.253-0.518-0.367c-0.632-0.428-1.131-0.765-1.117-1.642c-0.196-0.223-0.214-0.416-0.235-0.64c-0.017-0.183-0.036-0.39-0.14-0.595c-0.066-0.119-0.209-0.245-0.36-0.378c-0.132-0.116-0.282-0.248-0.327-0.338c-0.214-0.403-0.372-0.659-0.487-0.848c-0.309-0.503-0.309-0.503-0.305-1.642l0.001-4.877c0-0.797%2C0-2.001%2C1.567-2.519l0.069-0.022V7.111c0-1.732%2C3.203-4.375%2C5.279-5.245c0.12-0.053%2C0.257-0.078%2C0.433-0.078c0.124%2C0%2C0.25%2C0.011%2C0.38%2C0.023c0.14%2C0.012%2C0.283%2C0.025%2C0.426%2C0.025c0.213%2C0%2C0.389-0.028%2C0.553-0.086c0.194-0.072%2C0.351-0.138%2C0.487-0.196c0.289-0.123%2C0.48-0.204%2C0.744-0.204c0.208%2C0%2C0.471%2C0.051%2C0.85%2C0.165c1.105-0.037%2C2.124-0.079%2C3.195-0.124c0.173%2C0.05%2C0.334%2C0.184%2C0.491%2C0.313c0.14%2C0.116%2C0.271%2C0.225%2C0.428%2C0.276c0.421-0.025%2C0.771-0.063%2C1.152-0.106c0.129%2C0.047%2C1.522%2C0.663%2C1.771%2C0.815c1.927%2C1.162%2C3.029%2C3.684%2C4.002%2C5.908c0.174%2C0.399%2C0.345%2C0.79%2C0.517%2C1.164c0.313%2C0.685%2C0.248%2C1.818%2C0.186%2C2.914c-0.052%2C0.896-0.104%2C1.822%2C0.051%2C2.508c0.075%2C0.348%2C0.175%2C0.421%2C0.263%2C0.464c0.002%2C0.032-0.08%2C0.361-0.145%2C0.625c-0.172%2C0.694-0.418%2C1.259-0.657%2C1.806c-0.372%2C0.854-0.724%2C1.661-0.701%2C2.791c-0.074%2C0.037-0.167%2C0.078-0.266%2C0.122c-0.306%2C0.136-0.653%2C0.29-0.819%2C0.46c-0.268%2C0.429-0.433%2C0.896-0.592%2C1.349c-0.18%2C0.512-0.35%2C0.996-0.637%2C1.388c-0.207%2C0.29-0.465%2C0.564-0.714%2C0.829c-0.278%2C0.296-0.566%2C0.602-0.783%2C0.93c-0.267%2C0.399-0.132%2C1.324%2C0%2C2.218c0.073%2C0.5%2C0.142%2C0.971%2C0.115%2C1.235c-0.145%2C1.74%2C0.355%2C2.745%2C1.67%2C3.363c0.794%2C0.366%2C1.661%2C0.53%2C2.5%2C0.688c0.49%2C0.093%2C0.979%2C0.185%2C1.454%2C0.316c1.007%2C0.275%2C2.049%2C0.561%2C3.045%2C1.054c0.429%2C0.213%2C0.907%2C0.367%2C1.37%2C0.516c0.581%2C0.188%2C1.182%2C0.38%2C1.699%2C0.694c1.232%2C0.76%2C2.218%2C2.787%2C2.928%2C6.028c0.055%2C0.286%2C0.108%2C0.567%2C0.157%2C0.798c0.156%2C0.792%2C0.309%2C3.851%2C0.183%2C5.245C43.305%2C50.164%2C33.548%2C51.9%2C22%2C51.9z%20M21.932%2C47.054c-0.532%2C0-0.983%2C0.176-1.341%2C0.521c-0.364%2C0.342-0.549%2C0.774-0.549%2C1.284c0%2C0.567%2C0.191%2C1.016%2C0.568%2C1.334c0.376%2C0.315%2C0.821%2C0.475%2C1.321%2C0.475c0.485%2C0%2C0.918-0.162%2C1.285-0.481c0.375-0.325%2C0.565-0.771%2C0.565-1.327c0-0.509-0.18-0.94-0.534-1.284C22.895%2C47.229%2C22.451%2C47.054%2C21.932%2C47.054z%20M22.235%2C34.687c0.78%2C0%2C1.427%2C0.225%2C1.921%2C0.667c0.495%2C0.447%2C0.736%2C0.98%2C0.736%2C1.628c0%2C0.325-0.081%2C0.631-0.24%2C0.907c-0.157%2C0.277-0.359%2C0.539-0.603%2C0.778c-0.242%2C0.236-0.645%2C0.589-1.192%2C1.055c-0.635%2C0.539-1.145%2C1.011-1.515%2C1.402c-0.372%2C0.386-0.68%2C0.852-0.915%2C1.385c-0.229%2C0.524-0.345%2C1.155-0.345%2C1.874c0%2C0.59%2C0.166%2C1.041%2C0.494%2C1.342c0.325%2C0.303%2C0.73%2C0.455%2C1.204%2C0.455c0.911%2C0%2C1.462-0.468%2C1.636-1.39c0.096-0.405%2C0.167-0.69%2C0.216-0.854c0.048-0.166%2C0.111-0.319%2C0.192-0.471c0.08-0.156%2C0.208-0.331%2C0.382-0.521c0.176-0.195%2C0.407-0.421%2C0.694-0.68c1.061-0.918%2C1.806-1.581%2C2.216-1.971c0.419-0.401%2C0.782-0.876%2C1.081-1.413c0.306-0.552%2C0.46-1.2%2C0.46-1.927c0-0.923-0.269-1.788-0.8-2.571c-0.533-0.786-1.296-1.414-2.268-1.867c-0.962-0.452-2.091-0.682-3.355-0.682c-1.36%2C0-2.568%2C0.275-3.591%2C0.818c-1.021%2C0.543-1.809%2C1.238-2.345%2C2.066c-0.535%2C0.83-0.806%2C1.663-0.806%2C2.477c0%2C0.411%2C0.178%2C0.797%2C0.53%2C1.146c0.351%2C0.35%2C0.787%2C0.526%2C1.297%2C0.526c0.861%2C0%2C1.456-0.501%2C1.768-1.489c0.299-0.881%2C0.675-1.562%2C1.116-2.022C20.635%2C34.912%2C21.318%2C34.687%2C22.235%2C34.687z%22%2F%3E%3C%2Fsvg%3E");
       }
     </style>
-    <fs-client name="{{clientName}}" on-authenticated-changed="_authenticatedChanged"></fs-client>
+    <fs-person-cache name="{{clientName}}" person-id="{{personId}}" person="{{person}}"></fs-person-cache>
     <div id="portrait" class$="{{gender}}"></div>
   </template>
 </dom-module>
 
 <script>
-  
-  Polymer({
+  (function(){
     
-    is: 'fs-person-portrait',
-    
-    properties: {
+    var PortraitCache = {
+      
+      // Keyed by clientName and personId
+      cache: {},
       
       /**
-       * Gender: `male`, `female`, `unknown`. 
-       * This controls what gender icon is shown while a portrait is loading 
-       * and when a portrait does not exist for a person.
-       * 
-       * @type String
+       * Register an observer for a given clientName/personId pair.
+       * Returns true if the observer was the first one attached
        */
-      gender: {
-        type: String,
-        notify: true,
-        value: 'unknown',
-        observer: '_genderChanged'
+      addObserver: function(clientName, personId, observer){
+        var self = this,
+            first = this.ensureConfig(clientName, personId);
+        this.cache[clientName][personId].observers.push(observer);
+        if(typeof this.cache[clientName][personId].portrait !== 'undefined'){
+          observer.portraitUrl = self.cache[clientName][personId].portrait;
+        }
+        return first;
       },
       
       /**
-       * Portrait image URL.
-       * 
-       * @type String
+       * Saves the portrait and notifies all registered observers.
        */
-      portraitUrl: {
-        type: String,
-        notify: true
+      setPortrait: function(clientName, personId, portrait){
+        this.ensureConfig(clientName, personId);
+        this.cache[clientName][personId].portrait = portrait;
+        var observers = this.cache[clientName][personId].observers;
+        for(var i = 0; i < observers.length; i++){
+          observers[i].portraitUrl = portrait;
+        }
       },
       
-      portraitRequested: {
-        type: Boolean,
-        value: false,
-        readOnly: true
-      }
-      
-    },
-    
-    behaviors: [FSPersonBehavior],
-    
-    observers: [
-      '_getPortrait(person)'
-    ],
-    
-    _getPortrait: function(){
-      if(this.isAuthenticated() && this.person && !this.portraitRequested){
-        var self = this;
-        
-        this.person.getPersonPortraitUrl().then(function(response){
-          self.portraitUrl = response.getPortraitUrl();
-          if(self.portraitUrl){
-            self.$.portrait.style['background-image'] = "url('" + self.portraitUrl + "')";
+      removeObserver: function(clientName, personId, observer){
+        this.ensureConfig(clientName, personId);
+        var observers = this.cache[clientName][personId].observers;
+        for(var i = 0; i < observers.length; i++){
+          if(observers[i] === observer){
+            observers.splice(i, 1);
+            return;
           }
-        });
-        
-        this._setPortraitRequested(true);
+        }
+      },
+      
+      /**
+       * Ensures that a config object for the person exists.
+       * Returns true if the config had to be created.
+       */
+      ensureConfig: function(clientName, personId){
+        if(!this.cache[clientName]){
+          this.cache[clientName] = {};
+        }
+        if(!this.cache[clientName][personId]){
+          this.cache[clientName][personId] = {
+            observers: []
+          };
+          return true;
+        }
       }
-    },
+      
+    };
+
+    Polymer({
+      
+      is: 'fs-person-portrait',
+      
+      properties: {
+        
+        personId: {
+          type: String,
+          notify: true
+        },
+        
+        person: {
+          type: Object,
+          observer: '_personChanged'
+        },
+        
+        /**
+         * Gender: `male`, `female`, `unknown`. 
+         * This controls what gender icon is shown while a portrait is loading 
+         * and when a portrait does not exist for a person.
+         * 
+         * @type String
+         */
+        gender: {
+          type: String,
+          notify: true,
+          value: 'unknown',
+          observer: '_genderChanged'
+        },
+        
+        /**
+         * Portrait image URL.
+         * 
+         * @type String
+         */
+        portraitUrl: {
+          type: String,
+          notify: true,
+          observer: '_portraitUrlChanged'
+        }
+        
+      },
+      
+      behaviors: [FSBehavior],
+      
+      _personChanged: function(newPerson, oldPerson){
+        if(oldPerson){
+          PortraitCache.removeObserver(this);
+        }
+        if(newPerson){
+          this.gender = this.person.getDisplayGender();
+          this.personId = newPerson.getId();
+          
+          var self = this;
+          var first = PortraitCache.addObserver(this.clientName, this.personId, this);
+          
+          // If we're the first attached observer then we're in charge of requesting
+          // the person when the user has authenticated
+          if(first){
+            newPerson.getPersonPortraitUrl().then(function(response){
+              PortraitCache.setPortrait(self.clientName, self.personId, response.getPortraitUrl());
+            });
+          }
+        }
+      },
+      
+      _portraitUrlChanged: function(){
+        if(this.portraitUrl){
+          this.$.portrait.style['background-image'] = "url('" + this.portraitUrl + "')";
+        } else {
+          this.$.portrait.style['background-image'] = '';
+        }
+      },
+      
+      _genderChanged: function(){
+        if(this.gender){
+          this.gender = this.gender.toLowerCase();
+        } else {
+          this.gender = 'unknown';
+        }
+      }
+      
+    });
     
-    _genderChanged: function(){
-      this.gender = this.gender.toLowerCase();
-    }
-    
-  });
-  
+      
+  })();
 </script>

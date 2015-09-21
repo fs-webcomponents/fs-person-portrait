@@ -42,11 +42,11 @@
     <fs-signin></fs-signin>
     <br>
     
-    <paper-card heading="No Portrait">
+    <paper-card heading="No ID">
       <div class="card-content">
-        <fs-person-portrait person-id="KWWC-RCL"></fs-person-portrait>
-        <fs-person-portrait person-id="KWWC-RCL" gender="FEMALE"></fs-person-portrait>
-        <fs-person-portrait person-id="KWWC-RCL" gender="male"></fs-person-portrait>
+        <fs-person-portrait gender="unknown"></fs-person-portrait>
+        <fs-person-portrait gender="FEMALE"></fs-person-portrait>
+        <fs-person-portrait gender="male"></fs-person-portrait>
       </div>
     </paper-card>
     
@@ -54,36 +54,37 @@
       <div class="card-content">
         <p>Using <code>--fs-person-portrait-size</code></p>
         <fs-person-portrait person-id="KWWC-RCL" class="small"></fs-person-portrait>
-        <fs-person-portrait person-id="KWWC-RCL" gender="female"></fs-person-portrait>
-        <fs-person-portrait person-id="KWWC-RCL" gender="male" class="large"></fs-person-portrait>
+        <fs-person-portrait person-id="KWWC-RCL"></fs-person-portrait>
+        <fs-person-portrait person-id="KWWC-RCL" class="large"></fs-person-portrait>
       </div>
     </paper-card>
     
     <paper-card heading="Border radius" id="radius">
       <div class="card-content">
         <p>Using <code>--fs-person-portrait-border-radius</code></p>
-        <fs-person-portrait person-id="KWWC-RCL"></fs-person-portrait>
-        <fs-person-portrait person-id="KWWC-RCL" gender="female" class="rounded"></fs-person-portrait>
-        <fs-person-portrait person-id="KWWC-RCL" gender="male" class="circle"></fs-person-portrait>
+        <fs-person-portrait person-id="KWQM-1XT"></fs-person-portrait>
+        <fs-person-portrait person-id="KWQM-1XT" class="rounded"></fs-person-portrait>
+        <fs-person-portrait person-id="KWQM-1XT" class="circle"></fs-person-portrait>
       </div>
     </paper-card>
     
-    <paper-card heading="Portrait With ID">
+    <paper-card heading="Portrait">
       <div class="card-content">
         <fs-person-portrait person-id="KW7H-D56"></fs-person-portrait>
       </div>
     </paper-card>
     
-    <paper-card heading="Toggle - Portrait With ID">
+    <paper-card heading="Change ID">
       <div class="card-content">
         <fs-person-portrait id="toggle-id"></fs-person-portrait>
       </div>
       <div class="card-actions">
         <paper-button id="toggle-id-btn">Set ID</paper-button>
+        <paper-button id="toggle-id-btn2">Different ID</paper-button>
       </div>
     </paper-card>
     
-    <paper-card heading="Toggle - Portrait With Person">
+    <paper-card heading="Set Person">
       <div class="card-content">    
         <fs-person-portrait id="toggle-person"></fs-person-portrait>
       </div>
@@ -95,6 +96,10 @@
     <script>
       document.getElementById('toggle-id-btn').addEventListener('click', function(){
         document.getElementById('toggle-id').personId = 'KW7H-D56';
+      });
+      
+      document.getElementById('toggle-id-btn2').addEventListener('click', function(){
+        document.getElementById('toggle-id').personId = 'KWQM-1XT';
       });
       
       var client = document.getElementById('client').client;
