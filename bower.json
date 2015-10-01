@@ -1,6 +1,6 @@
 {
   "name": "fs-person-portrait",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "authors": [
     "Justin York"
   ],
@@ -19,7 +19,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.0.0",
-    "fs-person-behavior": "fs-webcomponents/fs-person-behavior#~0.1.2",
+    "fs-person-behavior": "fs-webcomponents/fs-person-behavior#~0.1.4",
     "fs-client": "fs-webcomponents/fs-client#~0.1.9"
   },
   "devDependencies": {

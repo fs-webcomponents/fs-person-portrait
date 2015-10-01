@@ -81,6 +81,7 @@
       <div class="card-actions">
         <paper-button id="toggle-id-btn">Set ID</paper-button>
         <paper-button id="toggle-id-btn2">Different ID</paper-button>
+        <paper-button id="toggle-id-btn3">Reset</paper-button>
       </div>
     </paper-card>
     
@@ -100,6 +101,10 @@
       
       document.getElementById('toggle-id-btn2').addEventListener('click', function(){
         document.getElementById('toggle-id').personId = 'KWQM-1XT';
+      });
+      
+      document.getElementById('toggle-id-btn3').addEventListener('click', function(){
+        document.getElementById('toggle-id').reset();
       });
       
       var client = document.getElementById('client').client;

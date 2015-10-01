@@ -111,6 +111,9 @@ Custom property | Description | Default
         this.person.getPersonPortraitUrl().then(function(response){
           self.portraitUrl = response.getPortraitUrl();
         });
+      } else {
+        this.portraitUrl = '';
+        this.gender = '';
       }
     },
     
