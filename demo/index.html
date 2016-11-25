@@ -38,7 +38,7 @@
       }
     </style>
 
-    <fs-client id="client" client-id="a02j00000099Mc2AAE" redirect-uri="/" environment="sandbox" save-access-token></fs-client>
+    <fs-client id="client" app-key="a02j00000099Mc2AAE" redirect-uri="." environment="sandbox" save-access-token></fs-client>
     <fs-signin></fs-signin>
     <br>
     
@@ -107,16 +107,18 @@
         document.getElementById('toggle-id').reset();
       });
       
-      var client = document.getElementById('client').client;
       document.getElementById('toggle-person-btn').addEventListener('click', function(){
-        document.getElementById('toggle-person').person = client.createPerson({
+        document.getElementById('toggle-person').person = {
           id: 'KW7H-D56',
           links: {
             portrait: {
-              href: 'https://sandbox.familysearch.org/platform/tree/persons/KW7H-D56/portrait'
+              href: 'https://integration.familysearch.org/platform/tree/persons/KW7H-D56/portrait'
             }
+          },
+          display: {
+            gender: 'Female'
           }
-        });
+        };
       });
     </script>
 
