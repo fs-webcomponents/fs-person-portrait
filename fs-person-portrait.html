@@ -104,9 +104,10 @@ Custom property | Description | Default
       if(this.person){
         var self = this;
         this.gender = this.person.display.gender;
-        this.getClient().get(this.person.links['portrait'].href, function(response){
-          console.log(response.getHeader('Location'));
-          self.portraitUrl = response.getHeader('Location');
+        this.getClient().get(this.person.links['portrait'].href, function(error, response){
+          if(!error){
+            self.portraitUrl = response.headers.Location;
+          }
         });
       } else {
         this.portraitUrl = '';
