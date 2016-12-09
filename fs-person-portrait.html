@@ -104,7 +104,7 @@ Custom property | Description | Default
       if(this.person){
         var self = this;
         this.gender = this.person.display.gender;
-        this.getClient().get(this.person.links['portrait'].href, function(error, response){
+        this.getClient().get('/platform/tree/persons/' + this.person.id + '/portrait', function(error, response){
           if(!error){
             self.portraitUrl = response.headers.Location;
           }
