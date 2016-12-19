@@ -63,10 +63,6 @@ Custom property | Description | Default
     
     properties: {
       
-      personId: {
-        observer: '_personIdChanged'
-      },
-      
       /**
        * Gender: `male`, `female`, `unknown`. 
        * This controls what gender icon is shown while a portrait is loading 
@@ -95,10 +91,6 @@ Custom property | Description | Default
     },
     
     behaviors: [FSPersonBehavior],
-    
-    _personIdChanged: function(){
-      this._setPersonRequested(false);
-    },
     
     _personChanged: function(){
       if(this.person){
