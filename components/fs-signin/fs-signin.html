@@ -1,0 +1,97 @@
+<!-- @license MIT -->
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../fs-client/fs-client.html">
+<link rel="import" href="../fs-behavior/fs-behavior.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-styles/color.html">
+
+<!--
+A FamilySearch sign in button.
+
+Example:
+
+    <fs-signin></fs-signin>
+
+### Styling
+
+The following custom properties are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--fs-signin-signout` | Mixin applied when the button is in the signed out state | {}
+`--fs-signin-signin` | Mixin applied when the button is in the signed in state | {}
+
+@element fs-signin
+@demo demo/index.html
+-->
+
+<dom-module id="fs-signin">
+  <template>
+    <style>
+      :host {
+        font-family: arial;
+      }
+      
+      paper-button {
+        background-color: var(--paper-grey-200);
+        color: #333;
+        @apply(--fs-signin-signout);
+      }
+      
+      paper-button.recommended {
+        background-color: var(--paper-blue-500);
+        color: #fff;
+        @apply(--fs-signin-signin);
+      }
+    </style>
+    <fs-client id="client" name="{{clientName}}" on-authenticated-changed="_authenticatedChanged"></fs-client>
+    <paper-button id="button" class$="{{_computeClass(signedIn)}}" on-click="_clickAction">{{_computeText(signedIn)}}</paper-button>
+  </template>
+  
+  <script>
+  
+    Polymer({
+      
+      is: 'fs-signin',
+      
+      behaviors: [FSBehavior],
+      
+      properties: {
+        
+        signedIn: {
+          type: Boolean,
+          notify: true,
+          value: false
+        }
+        
+      },
+  
+      ready: function(){
+        this.signedIn = this.isAuthenticated();
+      }, 
+      
+      _clickAction: function(){
+        if(this.signedIn){
+          this.$.client.signOut();
+        } else {
+          this.$.client.signIn();
+        }
+      },
+      
+      _authenticatedChanged: function(e){
+        this.signedIn = e.detail.value;
+      },
+      
+      _computeText: function(signedIn){
+        return signedIn ? 'Sign Out' : 'Sign In';
+      },
+      
+      _computeClass: function(signedIn){
+        return signedIn ? '' : 'recommended';
+      }
+      
+    });
+  </script>
+  
+</dom-module>

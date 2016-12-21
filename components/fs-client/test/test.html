@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../fs-client.html">
+  </head>
+  <body>
+
+    <fs-client id="basic" app-key="foobar" redirect-uri="/"></fs-client>
+    <fs-client id="name1" app-key="foobar" name="test"></fs-client>
+    <fs-client id="name2" name="test"></fs-client>
+    <fs-client id="init" app-key="foobar" name="init"></fs-client>
+    <div id="init-wrapper"></div>
+
+    <script>
+      suite('<fs-client>', function(){
+        
+        test('basic setup', function(){
+          var element = document.getElementById('basic');
+          expect(element.client).to.exist;
+          expect(element.redirectUri).to.equal(document.location.origin + '/');
+        });
+        
+        test('named clients', function(){
+          var el1 = document.getElementById('name1'),
+              el2 = document.getElementById('name2');
+          expect(el1.client).to.equal(el2.client);
+        });
+        
+        // Set state to authenticated first and listen for the change event.
+        // Then set the state to unauthenticated and verify the event fired too.
+        test('authentication', function(done){
+          var element = document.getElementById('basic');
+          element.addEventListener('authenticated-changed', function(e){
+            
+            // Authenticated event; change state to unauthenticated
+            if(e.detail.value){
+              element.signOut();
+            }
+            
+            // Unauthenicated; we're done
+            else {
+              done();
+            }
+          });
+          
+          // Set state to authenticated
+          element._setAuthenticated(true);
+        });
+        
+        test('initial authenticated state', function(){
+          document.getElementById('init').client.accessToken = "foobar";
+          var wrapper = document.getElementById('init-wrapper');
+          wrapper.innerHTML = '<fs-client name="init"></fs-client>';
+          expect(wrapper.childNodes[0].authenticated).to.be.true;
+        });
+        
+      });
+    </script>
+
+  </body>
+</html>

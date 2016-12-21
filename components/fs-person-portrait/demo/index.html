@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>fs-person-portrait Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../../fs-client/fs-client.html">
+    <link rel="import" href="../../fs-signin/fs-signin.html">
+    <link rel="import" href="../fs-person-portrait.html">
+    <link rel="import" href="../../paper-card/paper-card.html">
+    <link rel="import" href="../../paper-button/paper-button.html">
+  </head>
+  <body unresolved>
+    <style is="custom-style">
+      paper-card {
+        margin: 16px 16px 0 0;
+      }
+      
+      .small {
+        --fs-person-portrait-size: 40px;
+      }
+      
+      .large {
+        --fs-person-portrait-size: 150px;
+      }
+      
+      #radius fs-person-portrait {
+        background-color: #FFECB3;
+      }
+      
+      .rounded {
+        --fs-person-portrait-border-radius: 15px;
+      }
+      
+      .circle {
+        --fs-person-portrait-border-radius: 37px;
+      }
+    </style>
+
+    <fs-client id="client" app-key="a02j00000099Mc2AAE" redirect-uri="." environment="sandbox" save-access-token exchange-code redirect-after-sign-in="." debounce-duplicates></fs-client>
+    <fs-signin></fs-signin>
+    <br>
+    
+    <paper-card heading="No ID">
+      <div class="card-content">
+        <fs-person-portrait gender="unknown"></fs-person-portrait>
+        <fs-person-portrait gender="FEMALE"></fs-person-portrait>
+        <fs-person-portrait gender="male"></fs-person-portrait>
+      </div>
+    </paper-card>
+    
+    <paper-card heading="Sizing">
+      <div class="card-content">
+        <p>Using <code>--fs-person-portrait-size</code></p>
+        <fs-person-portrait person-id="KWWC-RCL" class="small"></fs-person-portrait>
+        <fs-person-portrait person-id="KWWC-RCL"></fs-person-portrait>
+        <fs-person-portrait person-id="KWWC-RCL" class="large"></fs-person-portrait>
+      </div>
+    </paper-card>
+    
+    <paper-card heading="Border radius" id="radius">
+      <div class="card-content">
+        <p>Using <code>--fs-person-portrait-border-radius</code></p>
+        <fs-person-portrait person-id="KWQM-1XT"></fs-person-portrait>
+        <fs-person-portrait person-id="KWQM-1XT" class="rounded"></fs-person-portrait>
+        <fs-person-portrait person-id="KWQM-1XT" class="circle"></fs-person-portrait>
+      </div>
+    </paper-card>
+    
+    <paper-card heading="Portrait">
+      <div class="card-content">
+        <fs-person-portrait person-id="KW7H-D56"></fs-person-portrait>
+      </div>
+    </paper-card>
+    
+    <paper-card heading="Change ID">
+      <div class="card-content">
+        <fs-person-portrait id="toggle-id"></fs-person-portrait>
+      </div>
+      <div class="card-actions">
+        <paper-button id="toggle-id-btn">Set ID</paper-button>
+        <paper-button id="toggle-id-btn2">Different ID</paper-button>
+        <paper-button id="toggle-id-btn3">Reset</paper-button>
+      </div>
+    </paper-card>
+    
+    <paper-card heading="Set Person">
+      <div class="card-content">    
+        <fs-person-portrait id="toggle-person"></fs-person-portrait>
+      </div>
+      <div class="card-actions">
+        <paper-button id="toggle-person-btn">Set Person</paper-button>
+      </div>
+    </paper-card>
+    
+    <script>
+      document.getElementById('toggle-id-btn').addEventListener('click', function(){
+        document.getElementById('toggle-id').personId = 'KW7H-D56';
+      });
+      
+      document.getElementById('toggle-id-btn2').addEventListener('click', function(){
+        document.getElementById('toggle-id').personId = 'KWQM-1XT';
+      });
+      
+      document.getElementById('toggle-id-btn3').addEventListener('click', function(){
+        document.getElementById('toggle-id').reset();
+      });
+      
+      document.getElementById('toggle-person-btn').addEventListener('click', function(){
+        document.getElementById('toggle-person').person = {
+          id: 'KW7H-D56',
+          links: {
+            portrait: {
+              href: 'https://integration.familysearch.org/platform/tree/persons/KW7H-D56/portrait'
+            }
+          },
+          display: {
+            gender: 'Female'
+          }
+        };
+      });
+    </script>
+
+  </body>
+</html>

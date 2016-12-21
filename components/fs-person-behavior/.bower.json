@@ -1,0 +1,36 @@
+{
+  "name": "fs-person-behavior",
+  "description": "Shared fs-person components behavior.",
+  "homepage": "https://github.com/york-solutions/fs-person-behavior",
+  "main": "fs-person-behavior.html",
+  "authors": [
+    "Justin York"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "/.*"
+  ],
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "familysearch"
+  ],
+  "dependencies": {
+    "fs-behavior": "fs-webcomponents/fs-behavior#^2.0.0",
+    "polymer": "Polymer/polymer#^1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0"
+  },
+  "version": "2.0.1",
+  "_release": "2.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.0.1",
+    "commit": "7d34b1cc6cf97bbb2d6963a6349fdf1e8e42f222"
+  },
+  "_source": "git://github.com/fs-webcomponents/fs-person-behavior.git",
+  "_target": "^2.0.0",
+  "_originalSource": "fs-webcomponents/fs-person-behavior"
+}

@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>fs-signin Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../fs-signin.html">
+  </head>
+  <body unresolved>
+    <style is="custom-style">
+      fs-signin.mixins {
+        --fs-signin-signin: {
+          background-color: var(--google-red-500);
+        }
+        --fs-signin-signout: {
+          background-color: var(--paper-yellow-200);
+        }
+      }
+    </style>
+
+    <fs-client app-key="a02j00000099Mc2AAE" redirect-uri="." environment="sandbox" save-access-token exchange-code redirect-after-sign-in="."></fs-client>
+    
+    <fs-signin></fs-signin>
+    <fs-signin class="mixins"></fs-signin>
+
+  </body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "name": "fs-signin",
+  "description": "Polymer element that manages FamilySearch authentication state.",
+  "homepage": "https://github.com/fs-webcomponents/fs-signin",
+  "main": "fs-signin.html",
+  "authors": [
+    "Justin York"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "/.*"
+  ],
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "familysearch"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "fs-client": "fs-webcomponents/fs-client#^2.0.0",
+    "fs-behavior": "fs-webcomponents/fs-behavior#^2.0.0",
+    "paper-button": "PolymerElements/paper-button#^1.0.14",
+    "paper-styles": "PolymerElements/paper-styles#^1.1.5"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.1.7"
+  },
+  "version": "2.0.1",
+  "_release": "2.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.0.1",
+    "commit": "ed0f902207ad09497c5e007dfc7b6666c3471506"
+  },
+  "_source": "git://github.com/fs-webcomponents/fs-signin.git",
+  "_target": "^2.0.0",
+  "_originalSource": "fs-webcomponents/fs-signin"
+}

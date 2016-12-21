@@ -1,0 +1,51 @@
+<script>
+  /**
+   * `FSBehavior` makes it easy to use an SDK client in another element. 
+   *     
+   * See [fs-signin](https://github.com/fs-webcomponents/fs-signin) for an example.
+   * 
+   * This behavior only defines the API documented below. It _does not_ actually
+   * define the client. You still need to include an `<fs-client>` element in
+   * the components local DOM, otherwise this behavior will not be helpful.
+   * 
+   * @polymerBehavior
+   */
+  var FSBehavior = {
+    
+    properties: {
+      
+      /**
+       * Optional name of the sdk client to use.
+       */
+      clientName: {
+        type: String,
+        value: 'default',
+        reflectToAttribute: true
+      }
+      
+    },
+    
+    /**
+     * Get the SDK instance.
+     */
+    getClient: function(){
+      var clientElement = this.$$('fs-client');
+      if(clientElement){
+        return clientElement.client;
+      }
+    },
+    
+    /**
+     * Returns true of the client is authenticated; returns false otherwise.
+     */
+    isAuthenticated: function(){
+      var clientElement = this.$$('fs-client');
+      if(clientElement){
+        return clientElement.authenticated;
+      } else {
+        return false;
+      }
+    }
+    
+  };
+</script>

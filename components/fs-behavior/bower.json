@@ -1,0 +1,26 @@
+{
+  "name": "fs-behavior",
+  "version": "2.0.2",
+  "description": "Shared FS component behavior for easy fs-client interaction.",
+  "homepage": "https://github.com/fs-webcomponents/fs-behavior",
+  "main": "fs-behavior.html",
+  "authors": [
+    "Justin York"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "/.*"
+  ],
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "familysearch"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0"
+  }
+}

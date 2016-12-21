@@ -1,0 +1,125 @@
+<link rel="import" href="../fs-behavior/fs-behavior.html">
+
+<script>
+  /**
+   * Basic handling of persons. Specify the `personId` to load the person
+   * or provide the person object via the `person` attribute.
+   * 
+   * @polymerBehavior FSPersonBehavior
+   */
+  FSPersonBehaviorImpl = {
+    
+    properties: {
+
+      /**
+       * Person ID
+       *
+       * @type String
+       */
+      personId: {
+        type: String,
+        notify: true,
+        observer: '_idChanged',
+        reflectToAttribute: true
+      },
+      
+      /**
+       * Person
+       * 
+       * @type Object
+       */
+      person: {
+        type: Object,
+        notify: true,
+        observer: '_personChanged'
+      },
+      
+      personRequested: {
+        type: Boolean,
+        readOnly: true,
+        value: false
+      },
+      
+      personLoading: {
+        type: Boolean,
+        readOnly: true,
+        value: false
+      }
+
+    },
+    
+    attached: function() {
+      this.loadPerson();
+    },
+    
+    loadPerson: function(){
+      var self = this;
+      if(!this.personRequested && this.isAuthenticated() && this.personId){
+        this._setPersonRequested(true);
+        this._setPersonLoading(true);
+        this.getClient().get('/platform/tree/persons/' + this.personId, function(error, response){
+          self._setPersonLoading(false);
+          if(error){
+            console.error(error);
+          }
+          else if(response && response.data && response.data.persons){
+            self.person = response.data.persons[0];
+          }
+        });
+      }
+    },
+    
+    /**
+     * Clear the personId and person and reset
+     * the element to its default state
+     */
+    reset: function() {
+      this.personId = null;
+    },
+    
+    _authenticatedChanged: function(event){
+      if(event.detail.value){
+        this.loadPerson();
+      }
+    },
+    
+    /**
+     * Update the state when appropriate. It's not as simple as we would want it
+     * to be because we're trying to keep the personId and person in sync while
+     * allowing either of them to change. If the personId changes we want to request
+     * a new person; if the person changes we want to update the personId. But
+     * if a personId and person are already set, then we change the person and
+     * update the personId, we don't want to clear the person and request them again.
+     */
+    _idChanged: function(){
+
+      // New id that does match current person; don't need to change anything
+      if(this.personId && this.person && this.personId === this.person.id){
+        // do nothing
+      }
+      
+      // Something has changed so reset
+      else {
+        this._setPersonRequested(false);
+        this._setPersonLoading(false);
+        this.person = null;
+        
+        // Load the new person if we need to
+        if(!this.person || this.person.id !== this.personId){
+          this.loadPerson();
+        }
+      }
+    },
+    
+    _personChanged: function(){
+      if(this.person){
+        console.log(this.person.id);
+        this.personId = this.person.id;
+      }
+    }
+    
+  };
+  
+  /* @polymerBehavior */
+  FSPersonBehavior = [ FSBehavior, FSPersonBehaviorImpl ];
+</script>

@@ -1,0 +1,31 @@
+{
+  "name": "fs-person-portrait",
+  "authors": [
+    "Justin York"
+  ],
+  "description": "A FamilySearch person card.",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "FamilySearch"
+  ],
+  "main": "fs-person-portrait.html",
+  "license": "MIT",
+  "homepage": "https://github.com/fs-webcomponents/fs-person-portrait/",
+  "ignore": [
+    "/.*",
+    "/test/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "fs-person-behavior": "fs-webcomponents/fs-person-behavior#^2.0.0",
+    "fs-client": "fs-webcomponents/fs-client#^2.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "fs-signin": "fs-webcomponents/fs-signin#^2.0.0",
+    "paper-card": "PolymerElements/paper-card#^1.0.4",
+    "paper-button": "PolymerElements/paper-button#^1.0.4",
+    "fs-client": "fs-webcomponents/fs-client#^2.1.0"
+  }
+}
