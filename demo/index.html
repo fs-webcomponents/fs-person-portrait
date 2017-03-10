@@ -12,31 +12,33 @@
     <link rel="import" href="../../paper-button/paper-button.html">
   </head>
   <body unresolved>
-    <style is="custom-style">
-      paper-card {
-        margin: 16px 16px 0 0;
-      }
-      
-      .small {
-        --fs-person-portrait-size: 40px;
-      }
-      
-      .large {
-        --fs-person-portrait-size: 150px;
-      }
-      
-      #radius fs-person-portrait {
-        background-color: #FFECB3;
-      }
-      
-      .rounded {
-        --fs-person-portrait-border-radius: 15px;
-      }
-      
-      .circle {
-        --fs-person-portrait-border-radius: 37px;
-      }
-    </style>
+    <custom-style>
+      <style is="custom-style">
+        paper-card {
+          margin: 16px 16px 0 0;
+        }
+        
+        .small {
+          --fs-person-portrait-size: 40px;
+        }
+        
+        .large {
+          --fs-person-portrait-size: 150px;
+        }
+        
+        #radius fs-person-portrait {
+          background-color: #FFECB3;
+        }
+        
+        .rounded {
+          --fs-person-portrait-border-radius: 15px;
+        }
+        
+        .circle {
+          --fs-person-portrait-border-radius: 37px;
+        }
+      </style>
+    </custom-style>
 
     <fs-client id="client" app-key="a02j00000099Mc2AAE" redirect-uri="." environment="sandbox" save-access-token exchange-code redirect-after-sign-in="." debounce-duplicates></fs-client>
     <fs-signin></fs-signin>
