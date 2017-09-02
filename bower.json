@@ -3,6 +3,7 @@
   "authors": [
     "Justin York"
   ],
+  "version": "3.0.0",
   "description": "A FamilySearch person card.",
   "keywords": [
     "web-component",
