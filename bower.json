@@ -1,9 +1,6 @@
 {
   "name": "fs-person-portrait",
-  "authors": [
-    "Justin York"
-  ],
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "A FamilySearch person card.",
   "keywords": [
     "web-component",
@@ -19,11 +16,11 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
-    "fs-person-mixin": "fs-webcomponents/fs-person-mixin",
-    "fs-request": "fs-webcomponents/fs-request#v4"
+    "fs-person-mixin": "fs-webcomponents/fs-person-mixin#^4.0.0",
+    "fs-request": "fs-webcomponents/fs-request#^4.0.0"
   },
   "devDependencies": {
-    "fs-signin": "fs-webcomponents/fs-signin#v4",
+    "fs-signin": "fs-webcomponents/fs-signin#^4.0.0",
     "paper-card": "PolymerElements/paper-card#^2.0.0",
     "paper-button": "PolymerElements/paper-button#^2.0.0"
   }
